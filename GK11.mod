@@ -4,30 +4,58 @@
 // changes include:
 // - correction of equation 6, "Value of banks' net wealth"
 // - analytic calculation of steady state values in steady_state_model (also, no more initval)
-// - analytic calculation of parameters calibrated on steady-state values as "hashed parameters" in model block (b del lam chi omg); therefore, deep parameters can now be estimated
+// - analytic calculation of parameters calibrated on steady-state values as "hashed parameters" in model block (utc del lam chi omg); therefore, deep parameters can now be estimated
 // - deleting descriptive variables not required for simulation/estimation (Welf, VMPK, W, Keff)
 // - changing variable and parameter names
 // The plotted IRFs replicate the black lines in Figure 2 of the paper (all in % deviations from SS).
 
-parameters 
-bet sig hab 
-varphi 
-zet tet alf gov acI eps gam gmP kpP kpY 
+parameters  % explanations below
+bet sig hab fri zet tet alf gov acI eps gam kpP kpY kap
+// exogenous-process parameters
 rho_a rho_i rho_k rho_g rho_p 
 sig_a sig_i sig_k sig_g sig_p sig_n 
-kap tau
 // steady states 
 LSS GSS FSS ISS DELSS SPRSS
 ;
  
 var 
-Y Ym K L I C G Q PI PIstar RHO LAM Rk R N Ne Nn NU ETA PHI Z X Pm U MU D F H Rn DEL In
+Y 		% output
+Ym 		% intermediate output
+K 		% capital
+L 		% labour supply
+I 		% investment
+C 		% household consumption
+G 		% government spending
+Qk 		% price of capital
+PI 		% inflation
+PIo		% optimal inflation
+RHO 	% stochastic discount factor
+LAM		% growth rate of stoch. discount factor
+Rk 		% return on capital	
+R 		% return on safe bond	
+N 		% total bank net worth
+Ne 		% net worth of existing banks
+Nn 		% net worth of entering banks
+NU 		% discounted marginal value of capital for bank
+ETA 	% discounted marginal value of net worth for bank
+PHI		% bank leverage (assets/net worth) 
+Z 		% growth rate of bank capital
+X 		% growth rate of bank net worth
+Pm 		% relative price intermediate goods
+U 		% capital utilisation
+MU 		% markup
+D 		% price dispersion
+F 		% recursive optimal inflation term I
+H 		% recursive optimal inflation term II
+Rn 		% nominal rate on safe bonds
+DEL 	% gross depreciation
+In  	% net investment
 // exog. shock processes
-EXA % technology (TFP)
-EXK % capital efficiency
-EXG % government spending
+EXA 	% technology (TFP)
+EXK 	% capital efficiency
+EXG 	% government spending
 // for plotting
-SPR % premium / spread Rk-R
+SPR 	% premium / spread Rk-R
 ;
  
 varexo % shock to ...
@@ -38,57 +66,58 @@ e_n    % ... net worth
 e_i    % ... investment technology
 ;
  
-bet = 0.99;
-sig = 1;
-hab = 0.815;
-varphi = 0.276;
-zet = 7.2;
-tet = 0.97155955;
-alf = 0.33;
-gov = 0.2;     % SS government spending over GDP
-acI = 1.728;
-eps = 4.167;
-gam = 0.779;
-gmP = 0.241;
-kpP = 1.5;
-kpY = -0.125;
-rho_i = 0;
-rho_k = 0.66;
-sig_k = 0.05;
-rho_a = 0.95;
-sig_a = 0.01;
-rho_g = 0.95;
-sig_g = 0.01;
-sig_n = 0.01;
-sig_i = 0.01;
-rho_p = 0.66;
-sig_p = 0.072;
+bet = 0.99;    	% discount factor
+sig = 1;       	% intertemp. elasticity of substitution
+hab = 0.815;   	% habit parameter
+fri = 0.276;   	% Frisch labour elasticity
+zet = 7.2;		% utilisation elasticity of depreciation
+tet = 0.97155955; % survival probability bankers [why not 0.5^(1/40)?]
+alf = 0.33;     % capital share in production
+gov = 0.2;      % SS government spending over GDP
+acI = 1.728;    % adjustment cost parameter investment
+eps = 4.167;    % elasticity of substitution goods
+gam = 0.779;    % Calvo probability
+kpP = 1.5;      % Taylor rule weight on inflation
+kpY = -0.125;   % Taylor rule weight on markup
 kap = 10;
-tau = 0.001;
-GSS = 0.16975710;
-LSS = 0.33333333;
-FSS = 4;          % leverage
-ISS = 0.14153927;
-DELSS = 0.025; 
-SPRSS = 0.01/4;   % spread Rk-R
-% omg = 0.00222778;
-% lam = 0.38149499;
-% chi = 3.41080850;
-% b   = 0.03760101;
-% del = 0.02041451;
+// persistence (rho) and standard deviation (sig) of ...
+rho_i = 0;   	% ... investment-specific shock
+sig_i = 0.01;
+rho_k = 0.66;	% ... capital efficiency shock
+sig_k = 0.05;
+rho_a = 0.95;	% ... TFP shock
+sig_a = 0.01;
+rho_g = 0.95;  	% ... government spending shock
+sig_g = 0.01;
+rho_p = 0.66;	% ... intertemp. preference shock
+sig_p = 0.072;
+sig_n = 0.01;	% ... net worth shock (rho_n=0)
+
+// steady state...
+GSS = 0.16975710;	% ... government spending
+LSS = 0.33333333; 	% ... labour supply
+FSS = 4;          	% ... leverage
+ISS = 0.14153927; 	% ... investment
+DELSS = 0.025;    	% ... net depreciation
+SPRSS = 0.01/4;   	% ... spread Rk-R
+% omg = 0.00222778; % ... share of net worth to new banks
+% lam = 0.38149499; % ... share of divertable assets
+% chi = 3.41080850; % ... labour disutility parameter
+% utc = 0.03760101; % ... utilisation cost parameter
+% del = 0.02041451; % ... gross depreciation rate
 
 model;
 #KSS   = (alf*(eps-1)/eps/(1/bet+SPRSS-1+DELSS))^(1/(1-alf))*LSS;
 #YSS   = KSS^alf*LSS^(1-alf);
-#b     = alf*(eps-1)/eps*YSS/KSS;
-#del   = DELSS - b/(1+zet);
+#utc     = alf*(eps-1)/eps*YSS/KSS;
+#del   = DELSS - utc/(1+zet);
 #omg   = (1-tet*(SPRSS*FSS + 1/bet))*KSS/FSS/KSS;
 #ZSS   = (1-omg*FSS)/tet;
 #ETASS = (1-tet)/(1-tet*bet*ZSS);
 #NUSS  = (1-tet)*bet*SPRSS/(1-bet*tet*ZSS);
 #lam   = NUSS + ETASS/FSS;
 #RHOSS = (1-bet*hab)*((1-hab)*(YSS-DELSS*KSS-gov*YSS))^(-sig);
-#chi   = RHOSS*(eps-1)/eps*(1-alf)*YSS/LSS^(1+varphi);
+#chi   = RHOSS*(eps-1)/eps*(1-alf)*YSS/LSS^(1+fri);
 
 
 //Households
@@ -102,7 +131,8 @@ bet*exp(R)*exp(LAM(+1)) = 1;
 exp(LAM) = exp(RHO)/exp(RHO(-1));
 
 //4. Labor market equilibrium
-chi*exp(L)^varphi =  exp(RHO)*exp(Pm)*(1-alf)*exp(Y)/exp(L);
+chi*exp(L)^fri =  exp(RHO)*exp(Pm)*(1-alf)*exp(Y)/exp(L);
+
 
 //Financial Intermediaries
 //5. Value of banks' capital
@@ -124,7 +154,7 @@ exp(X) = exp(PHI)/exp(PHI(-1))*exp(Z);
 
 //Aggregate capital, net worth
 //10. Aggregate capital
-exp(Q)*exp(K) = exp(PHI)*exp(N);
+exp(Qk)*exp(K) = exp(PHI)*exp(N);
 
 //11. Banks' net worth
 exp(N) = exp(Ne) + exp(Nn);
@@ -133,24 +163,24 @@ exp(N) = exp(Ne) + exp(Nn);
 exp(Ne) = tet*exp(Z)*exp(N(-1))*exp(-sig_n*e_n);
 
 //13. New banks' net worth
-exp(Nn) = omg*exp(Q)*exp(EXK)*exp(K(-1));
+exp(Nn) = omg*exp(Qk)*exp(EXK)*exp(K(-1));
 
 //Final goods producer
 //14. Return to capital
-exp(Rk) =  (exp(Pm)*alf*exp(Ym)/exp(K(-1))+exp(EXK)*(exp(Q)-exp(DEL)))/exp(Q(-1));
+exp(Rk) =  (exp(Pm)*alf*exp(Ym)/exp(K(-1))+exp(EXK)*(exp(Qk)-exp(DEL)))/exp(Qk(-1));
 
 //15. Production function
 exp(Ym) = exp(EXA)*(exp(EXK)*exp(U)*exp(K(-1)))^alf*exp(L)^(1-alf);
 
 //Capital Goods Producer
 //16. Optimal investment decision
-exp(Q) = 1 + acI/2*((In+ISS)/(In(-1)+ISS)-1)^2+acI*((In+ISS)/(In(-1)+ISS)-1)*(In+ISS)/(In(-1)+ISS)-bet*exp(LAM(+1))*acI*((In(+1)+ISS)/(In+ISS)-1)*((In(+1)+ISS)/(In+ISS))^2;
+exp(Qk) = 1 + acI/2*((In+ISS)/(In(-1)+ISS)-1)^2+acI*((In+ISS)/(In(-1)+ISS)-1)*(In+ISS)/(In(-1)+ISS)-bet*exp(LAM(+1))*acI*((In(+1)+ISS)/(In+ISS)-1)*((In(+1)+ISS)/(In+ISS))^2;
 
 //17. Depreciation rate
-exp(DEL) = del + b/(1+zet)*exp(U)^(1+zet);
+exp(DEL) = del + utc/(1+zet)*exp(U)^(1+zet);
 
 //18. Optimal capacity utilization rate
-exp(Pm)*alf*exp(Ym)/exp(U) = b*exp(U)^zet*exp(EXK)*exp(K(-1));
+exp(Pm)*alf*exp(Ym)/exp(U) = utc*exp(U)^zet*exp(EXK)*exp(K(-1));
 
 //19. Net investment
 In = exp(I) - exp(DEL)*exp(EXK)*exp(K(-1));
@@ -181,10 +211,10 @@ exp(F) =  exp(Y)*exp(Pm)+bet*gam*exp(LAM(+1))*exp(PI(+1))^eps*(exp(PI))^(-eps*ka
 exp(H) = exp(Y)+bet*gam*exp(LAM(+1))*exp(PI(+1))^(eps-1)*exp(PI)^(kap*(1-eps))*exp(H(+1));
 
 //28. Optimal price choice III
-exp(PIstar) = eps/(eps-1)*exp(F)/exp(H)*exp(PI);
+exp(PIo) = eps/(eps-1)*exp(F)/exp(H)*exp(PI);
 
 //29. Price index
-(exp(PI))^(1-eps) = gam*exp(PI(-1))^(kap*(1-eps))+(1-gam)*(exp(PIstar))^(1-eps);
+(exp(PI))^(1-eps) = gam*exp(PI(-1))^(kap*(1-eps))+(1-gam)*(exp(PIo))^(1-eps);
 
 //30. Fisher equation
 exp(Rn) = exp(R)*exp(PI(+1));
@@ -205,6 +235,7 @@ EXG = rho_g*EXG(-1) - sig_g*e_g;
 //For plotting:
 //35. Premium
 exp(SPR) = exp(Rk(+1))/exp(R);
+
 end;
 
 
@@ -261,5 +292,5 @@ var e_n = 0;
 var e_i = 0;
 end;
 
-stoch_simul(order=1, periods=2000, irf=40) EXK R SPR Y C I K L Q N PI Rn;
+stoch_simul(order=1, periods=2000, irf=40) EXK R SPR Y C I K L Qk N PI Rn;
 
