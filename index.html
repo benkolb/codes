@@ -4,9 +4,12 @@
 <link rel="icon" type="image/ico" href="http://benkolb.github.io/favicon.ico">
 <link rel="stylesheet" type="text/css" media="screen"
       href="http://benkolb.github.io/general.css">
+<link rel="stylesheet" type="text/css" media="screen"
+      href="general.css">
 <title>BK Code</title>
 </head>
 <body>
+<!--       
 <h1>Codes</h1>
 <table width="100%" border="0">
 <tr>
@@ -30,12 +33,51 @@
 <br /><br />
 </td>
 <td class="body">
+       -->
+
+<div class="navbar">
+  <a href="http://benkolb.github.io/">Home</a>
+  <a href="https://www.bkolb.eu/cv/CV_BKolb.pdf">CV</a>
+  <a href="http://benkolb.github.io/research/">Research</a>
+  <a class="active" href="http://benkolb.github.io/codes/">Code</a>
+  <a href="http://benkolb.github.io/how_to">Other</a>
+</div>
+      
+<br/><br/><br/>
+      
+<h1>Dynare</h1>
+<h2>Minimal steady state file example</h2>
+<p>
+<a href="http://benkolb.github.io/codes/steadystate.zip">steadystate.zip</a>
+</p>
+<h2>"A Truly Baseline DSGE Model"</h2>
+<p>Code implementing a stripped-down version of "A Baseline DSGE Model" by Jes&uacute;s Fern&aacute;ndez-Villaverde and Juan Rubio-Ram&iacute;rez, allowing to switch on single features of their model (like sticky wages, capital utilisation, adjustment costs etc.) back on one by one. Comes with some notes.
+<a href="http://benkolb.github.io/codes/Truly_Baseline_DSGE.zip">Truly_Baseline_DSGE.zip</a>
+</p>
+<h2>Dynare code for Meeks, Nelson and Alessandri (BoE WP, 2014)</h2>
+<p>With a Matlab file re-creating some of the figures in the paper.
+<a href="http://benkolb.github.io/codes/MNA14.zip">MNA14.zip</a>
+</p>
+<h2>Dynare code for Justiniano and Preston (JAE, 2010)</h2>
+<p>In log-linear form (as in their paper) and in levels, plus a note on derivations of the latter.
+<a href="http://benkolb.github.io/codes/JP10.zip">JP10.zip</a>
+</p>
+<h2>Dynare code for Ellison and Tischbirek (JEDC, 2014)</h2>
+<p>Plus a short note and a Matlab file to get the steady states.
+<a href="http://benkolb.github.io/codes/ET14.zip">ET14.zip</a>
+<h2>Dynare code for Gertler and Karadi (JME, 2011)</h2>
+<p>The file calculates the steady states and some calibrated parameters analytically and can thus be used for estimation.
+<a href="http://benkolb.github.io/codes/GK11.mod">GK11.mod</a>
+</p>
+<p>(This file is a slightly reduced version of the model -- no capital utilisation and net investment, fewer equations: <a href="http://benkolb.github.io/codes/GK11reduced.mod">GK11reduced.mod</a>)
+</p>
+
 <h1>Matlab</h1>
 <h2>(S)VAR toolbox (work in progress) </h2>
 <p>Allows for lag selection and estimation of a VAR using OLS equation-by-equation. An SVAR can be identified using short-run, long-run or sign restrictions. Confidence intervals are estimated using bootstrapping [last update: April 2015].
 <a href="http://benkolb.github.io/codes/Kolb.VAR.toolbox.zip">Kolb.VAR.toolbox.zip</a>
 </p>
-<br />
+<br/>
 <h2>Small-sample correction for local projections &agrave; la Herbst/Johannsen (2020 WP)</h2>
 <p>Function that creates the small-sample correction matrix in Equation (8) in <a href="https://www.federalreserve.gov/econres/feds/files/2020010pap.pdf">Herbst and Johannsen (2020 FEDS WP)</a> dependent on horizon H and periods T:
 <a href="http://benkolb.github.io/codes/gen_MTH.m">gen_MTH.m</a>
@@ -65,51 +107,27 @@
 <a href="http://benkolb.github.io/codes/Cond.VAR.FCs.zip">condfc2.zip</a>
 </p>
 
-<h1>Dynare</h1>
-<h2>Minimal steady state file example</h2>
-<p>
-<a href="http://benkolb.github.io/codes/steadystate.zip">steadystate.zip</a>
-</p>
-<h2>"A Truly Baseline DSGE Model"</h2>
-<p>Code implementing a stripped-down version of "A Baseline DSGE Model" by Jes&uacute;s Fern&aacute;ndez-Villaverde and Juan Rubio-Ram&iacute;rez, allowing to switch on single features of their model (like sticky wages, capital utilisation, adjustment costs etc.) back on one by one. Comes with some notes.
-<a href="http://benkolb.github.io/codes/Truly_Baseline_DSGE.zip">Truly_Baseline_DSGE.zip</a>
-</p>
-<h2>Dynare code for Meeks, Nelson and Alessandri (BoE WP, 2014)</h2>
-<p>With a Matlab file re-creating some of the figures in the paper.
-<a href="http://benkolb.github.io/codes/MNA14.zip">MNA14.zip</a>
-</p>
-<h2>Dynare code for Justiniano and Preston (JAE, 2010)</h2>
-<p>In log-linear form (as in their paper) and in levels, plus a note on derivations of the latter.
-<a href="http://benkolb.github.io/codes/JP10.zip">JP10.zip</a>
-</p>
-<h2>Dynare code for Ellison and Tischbirek (JEDC, 2014)</h2>
-<p>Plus a short note and a Matlab file to get the steady states.
-<a href="http://benkolb.github.io/codes/ET14.zip">ET14.zip</a>
-<h2>Dynare code for Gertler and Karadi (JME, 2011)</h2>
-<p>The file calculates the steady states and some calibrated parameters analytically and can thus be used for estimation.
-<a href="http://benkolb.github.io/codes/GK11.mod">GK11.mod</a>
-</p>
-<p>(This file is a slightly reduced version of the model -- no capital utilisation and net investment, fewer equations: <a href="http://benkolb.github.io/codes/GK11reduced.mod">GK11reduced.mod</a>)
-</p>
-
-<h1>R</h1>
-<p>Simple code to download data for a US Taylor rule from  <a href="https://datamarket.com/">datamarket.com</a> and save it to .ssv:
+<h2>R</h2>
+Simple code to download data for a US Taylor rule from  <a href="https://datamarket.com/">datamarket.com</a> and save it to .ssv:
 <a href="http://benkolb.github.io/codes/getdata.R">get_US_TR_data.r</a>
-</p>
-<p>Larger code to download data from  <a href="https://datamarket.com/">datamarket.com</a> and ECB, detrend, plot and save it:
+</br></br>
+Larger code to download data from  <a href="https://datamarket.com/">datamarket.com</a> and ECB, detrend, plot and save it:
 <a href="http://benkolb.github.io/codes/getdata.R">getdata.r</a>
-</p>
-<p>Code to create harmonised ECB APP dataset. Comes with csv files and a note.
+</br></br>
+Code to create harmonised ECB APP dataset. Comes with csv files and a note.
 <a href="http://benkolb.github.io/codes/ECB_APPs.zip">ECB_APPs.zip</a>
-</p>
-<h1>Libre Calc/MS Excel</h1>
-<h2>Create quarterly date labels; average monthly to quarterly series</h2>
-<p>
-<a href="http://benkolb.github.io/codes/LibreCalc_tricks.ods">Libre Calc</a>; 
-<a href="http://benkolb.github.io/codes/MSExcel_tricks.xls">MS Excel</a>
-</p>
+</br></br>
+<h2>Libre Calc/MS Excel</h2>
+Create quarterly date labels; average monthly to quarterly series:
+<a href="http://benkolb.github.io/codes/LibreCalc_tricks.ods">[Libre Calc]</a>; 
+<a href="http://benkolb.github.io/codes/MSExcel_tricks.xls">[MS Excel]</a>
+</br></br>
+</br></br>
+     
+<!--      
 </td>
 </tr>
 </table>
+      -->
 </body>
 </html>
