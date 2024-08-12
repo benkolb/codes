@@ -1,0 +1,52 @@
+
+/* NOTE:  rgb(192,208,234)=medium EUI blue, rgb(0,84,130)=dark EUI blue */
+body {font-family: 'Linux Libertine', sans-serif; background-color:  rgb(192,208,234);}
+
+/* The navigation bar */
+.navbar {
+  overflow: hidden;
+  background-color: rgb(0,84,130);
+  color: white;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+}
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+  display: block;
+  background-color: rgb(0,84,130);
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change background on mouse-over */
+.navbar a:hover {
+  background-color: rgb(0,42,65);
+  color: white;
+}
+
+/* Active navbar */
+.navbar a.active {background-color: white; color: rgb(0,84,130);}
+
+.main {
+  margin-top: 200px; /* Add a top margin to avoid content overlay */
+}
+
+h1 {font: x-large 'Linux Libertine', sans-serif; color: black;
+    border-bottom: thin rgb(0,84,130) solid;}
+
+h2 {font: large 'Linux Libertine', sans-serif; color: black;}
+
+table {margin: 0;}
+.sidebar {width="15%"; padding: 0.5em; background-color: rgb(0,84,130); color:  rgb(192,208,234); vertical-align:top;} 
+.sidebar ul li link {list-style-type: none; margin-left: 0; width="15%"; 
+                 margin-right: 0.5em; color: white; vertical-align:top;}
+.sidebar ul li a {width="15%"; font-family: 'Linux Libertine', sans-serif; background-color:  rgb(192,208,234); color: rgb(0,84,130);}
+.body {font-family: 'Linux Libertine', sans-serif; background-color:  rgb(192,208,234);}
+.object {width="15%"; padding: 0.5em; background-color: rgb(0,84,130); color:  rgb(192,208,234); vertical-align:top;} 
+img.icon {border: outset gray 3px; padding: 0;}
+p {margin: 0em 0.5em;}
